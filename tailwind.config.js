@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+
+import {colors} from 'tailwindcss/colors'
+
 module.exports = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -6,7 +9,10 @@ module.exports = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    extend: {
+    extend:{
+      colors: {
+          "sinyo": "rgb(5, 134, 237)"
+    },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
