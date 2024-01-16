@@ -1,6 +1,7 @@
 import React from "react";
 import Photo from "./Photo";
 import { cookies } from "next/headers";
+import { createServerClient } from "@supabase/ssr";
 
 async function fetchUserPhotos(user, supabaseServer) {
   if (!user) {
