@@ -4,13 +4,17 @@ import React, { useState } from "react";
 import { supabase } from "../utils/supabaseClient";
 import { useRouter } from "next/navigation";
 
-function AuthForm() {
+function AuthForm({ sendDataToParent }) {
   const [isNewUser, setIsNewUser] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSigningIn, setIsSigningIn] = useState(false);
   const [isSigningUp, setIsSigningUp] = useState(false);
   const router = useRouter()
+
+  const popNotification=(message, type)=>{
+    sendDataToParent(message, type)
+  }
 
   async function handleLogin(e) {
     e.preventDefault();
@@ -19,12 +23,15 @@ function AuthForm() {
         email,
         password
     })
-    console.log({error, data});
+    const supaData = {error, data};
+    const username = supaData?.data?.user?.email;
     if(!error){
+      popNotification("Welcome back, "+username,"success")
         router.push('/photos')
     }
      else{
-        setIsSigningIn(false)
+      popNotification("Wrong credentials!","failure")
+      setIsSigningIn(false)
     }
   }
 
@@ -34,10 +41,15 @@ function AuthForm() {
         email,
         password
     })
-    if(!error){
-        setIsSigningUp(true)
-    }
     console.log({data, error});
+    if(!error){
+      setIsSigningUp(true)
+      popNotification("Congratulations, "+email + " welcome to PicUp!","success")
+    }
+    else{
+      const response = JSON.parse(JSON.stringify(error)).message
+      popNotification(response,"failure")
+    }
   }
   let signInMessage = isNewUser
     ? isSigningIn
@@ -56,6 +68,7 @@ function AuthForm() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="appearance-none rounded relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                required
                 placeholder="Email"
             />
             <input
@@ -63,6 +76,7 @@ function AuthForm() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="appearance-none rounded relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                required
                 placeholder="Password"
             />
             <button

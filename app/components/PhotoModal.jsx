@@ -1,25 +1,28 @@
-'use client'
+"use client";
 
 import Image from "next/image";
 
-export default function PhotoModal({src,alt,onClose}){
-    if(!src) return null;
-    return(
-        <div
-        className="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center z-50">
-            <div className="bg-gray-800 p-4 rounded-lg relative border border-gray-600">
-                <button onClick={onClose} className="text-gray-300 hover:text-white mb-2">
-                    ❌
-                </button>
-                <div className="relative w-[80vw] h-[80vh]">
-                    <Image
-                    src={src}
-                    alt={alt}
-                    layout="fill"
-                    objectFit="contain"
-                    />
-                </div>
-            </div>
+export default function PhotoModal({ src, alt, onClose }) {
+  const handleInnerDivClick = (e) => {
+    e.stopPropagation();
+  };
+  if (!src) return null;
+  return (
+    <div
+      className="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center z-50"
+      onClick={onClose}
+    >
+      <div className="bg-gray-800 p-4 rounded-lg relative border border-gray-600 prop" onClick={handleInnerDivClick}>
+        <button
+          onClick={onClose}
+          className="text-gray-300 hover:text-white mb-2"
+        >
+          ❌
+        </button>
+        <div className="relative w-[80vw] h-[80vh]">
+          <Image src={src} alt={alt} layout="fill" objectFit="contain" />
         </div>
-    )
+      </div>
+    </div>
+  );
 }
