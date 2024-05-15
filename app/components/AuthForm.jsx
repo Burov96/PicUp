@@ -41,7 +41,7 @@ function AuthForm({ sendDataToParent }) {
         email,
         password
     })
-    console.log({data, error});
+    // console.log({data, error});
     if(!error){
       setIsSigningUp(true)
       popNotification("Congratulations, "+email + " welcome to PicUp!","success")
