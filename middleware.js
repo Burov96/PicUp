@@ -1,5 +1,4 @@
 import { createServerClient } from "@supabase/ssr";
-
 import { NextResponse } from "next/server";
 
 export async function middleware(req) {
@@ -32,7 +31,7 @@ export async function middleware(req) {
         remove(name, options) {
           req.cookies.set({
             name,
-            value:"",
+            value: "",
             ...options,
           });
           const response = NextResponse.next({
@@ -53,7 +52,12 @@ export async function middleware(req) {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  console.log({user});
+
+  // Set current path cookie
+  const currentPath = req.nextUrl.pathname;
+  res.cookies.set('currentPath', currentPath, { path: '/' });
+
+  // User redirection logic
   if (user && req.nextUrl.pathname === "/") {
     return NextResponse.redirect(new URL("/photos", req.url));
   }
@@ -62,6 +66,7 @@ export async function middleware(req) {
   }
   return res;
 }
+
 export const config = {
   matcher: ["/", "/photos"],
 };

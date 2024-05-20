@@ -3,7 +3,7 @@ import logo from "../images/Designer.png"
 import Nav from "../components/Nav"
 import PhotoGrid from "../components/PhotoGrid"
 import PhotoUploader from "../components/PhotoUploader"
-import SignOut from "../components/SignOut"
+// import SignOut from "../components/SignOut"
 
 function Photos() {
   return (
@@ -12,7 +12,7 @@ function Photos() {
         <div className=" container mx-auto px-4 py-4">
             <div className="flex flex-col items-center mb-6">
                 <h1 className=" text-4xl font-bold mb-4">
-                    Photos
+                    Your uploads
                 </h1>
                 <Image 
                 src={logo}
@@ -25,7 +25,7 @@ function Photos() {
 <PhotoGrid/>
         </div>
         <div className="absolute top-4 right-4">
-        <SignOut />
+        {/* <SignOut /> */}
         </div>
     </main>
   )
