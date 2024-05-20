@@ -38,15 +38,14 @@ const Notification = ({ message, type }) => {
       >
         <div className="w-20 h-20 flex items-center justify-center rounded-full text-white">
           <div className="">
-            {type === "success" ? (
-              <DotLottiePlayer src={"/success.lottie"} autoplay={true} />
-            ) : type === "failure" ? (
-              <DotLottiePlayer src={"/failure.lottie"} autoplay={true} />
-            ) : type === "removed" ? (
-              <DotLottiePlayer src={"/removed.lottie"} loop={false} autoplay={true} direction={-1} />
-            ) : (
-              <DotLottiePlayer src={"/warning.lottie"} autoplay={true} />
-            )}
+            {type === "success" ? ( <DotLottiePlayer src={"/success.lottie"} autoplay={true} />) 
+            : type === "failure" ? ( <DotLottiePlayer src={"/failure.lottie"} autoplay={true} />) 
+            : type === "removed" ? ( <DotLottiePlayer src={"/removed.lottie"} autoplay={true} direction={-1}/>) 
+            : type === "favourite" ? ( <DotLottiePlayer src={"/favourite.lottie"} autoplay={true}/>) 
+            : type === "delete" ? ( <DotLottiePlayer src={"/delete.lottie"} autoplay={true}/>) 
+            : type === "uploaded" ? ( <DotLottiePlayer src={"/uploaded.lottie"} autoplay={true}/>) 
+            // : type === "something" ? ( <DotLottiePlayer src={"/something.lottie"} autoplay={true}/>) 
+            : ( <DotLottiePlayer src={"/warning.lottie"} autoplay={true} />)}
           </div>
         </div>
         <div className="text-gray-800 text-sm md:text-xl py-2">{message}</div>

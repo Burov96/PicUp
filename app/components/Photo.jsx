@@ -23,7 +23,7 @@ export default function Photo({ src, alt, width, height, photoName, isFavorited}
     };
 
     const handleNotifyConditionally =(condition)=>{
-        !condition?handleNotify("Image added to favourites!","success")
+        !condition?handleNotify("Image added to favourites!","favourite")
         :handleNotify("Image removed from favourites!","removed")
     }
 
@@ -38,7 +38,7 @@ export default function Photo({ src, alt, width, height, photoName, isFavorited}
                 <form action={deletePhoto}
                 className=" absolute bottom-2.5 right-10 z-10">
                 <input type="hidden" name="photoPath" value={src} />
-                <button type="submit" className=" bg-transparent border-none text-white cursor-pointer hover:text-red-500 hover:scale-110" onClick={()=>handleNotify("The image have been removed","success")}><Delete/></button>
+                <button type="submit" className=" bg-transparent border-none text-white cursor-pointer hover:text-red-500 hover:scale-110" onClick={()=>handleNotify("The image have been removed","delete")}><Delete/></button>
                 </form>
                 <form action={addOrRemoveFromFavorites} className=" absolute bottom-2.5
                  right-2.5 z-10">

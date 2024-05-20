@@ -53,7 +53,7 @@ function PhotoUploader() {
             
         } finally {
             setUploading(false);
-            handleNotify('Image uploaded successfully!', 'success')
+            handleNotify('Image uploaded successfully!', 'uploaded')
     }
   }
   return (
