@@ -53,8 +53,8 @@ function AuthForm({ sendDataToParent }) {
   }
   let signInMessage = isNewUser
     ? isSigningIn
-      ? "Signing Up..."
-      : "Sign Up"
+    ? "Signing Up..."
+    : "Sign Up"
     : isSigningIn
     ? "Signing In..."
     : "Sign In";

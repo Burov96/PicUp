@@ -22,6 +22,11 @@ export default function Photo({ src, alt, width, height, photoName, isFavorited}
       }, 4000);
     };
 
+    const handleNotifyConditionally =(condition)=>{
+        !condition?handleNotify("Image added to favourites!","success")
+        :handleNotify("Image removed from favourites!","removed")
+    }
+
     console.log('the image here is favourited? Well that\'s '+ isFavorited)
 
     return(
@@ -39,7 +44,7 @@ export default function Photo({ src, alt, width, height, photoName, isFavorited}
                  right-2.5 z-10">
                     <input type="hidden" name="photoName" value={photoName} />
                     <input type="hidden" name="isFavorited" value={isFavorited} />
-                    <button type="submit" className={`bg-transparent border-none  cursor-pointer  hover:scale-110 transition duration-300 ${isFavorited?"text-green-500 hover:text-white":" text-white hover:text-green-500"}`} onClick={()=>handleNotify("Image added to favourites!","success")}>
+                    <button type="submit" className={`bg-transparent border-none  cursor-pointer  hover:scale-110 transition duration-300 ${isFavorited?"text-green-500 hover:text-white":" text-white hover:text-green-500"}`} onClick={()=>handleNotifyConditionally(isFavorited)}>
                         {isFavorited? <Favorite/>: <FavoriteBorder/>}</button>                    
                  </form>
                 <Image

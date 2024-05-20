@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { DotLottiePlayer } from "@dotlottie/react-player";
 import { useEffect, useState } from "react";
 
@@ -8,14 +8,15 @@ const Notification = ({ message, type }) => {
 
   useEffect(() => {
     const pre = setTimeout(() => {
-    setShow(true);
-    setShow2(true);},400);
+      setShow(true);
+      setShow2(true);
+    }, 400);
     const timeout = setTimeout(() => {
       setShow(false);
     }, 1000);
     setTimeout(() => {
       setShow2(false);
-    }, 3000)
+    }, 3000);
 
     return () => clearTimeout(pre, timeout);
   }, [message, type]);
@@ -41,6 +42,8 @@ const Notification = ({ message, type }) => {
               <DotLottiePlayer src={"/success.lottie"} autoplay={true} />
             ) : type === "failure" ? (
               <DotLottiePlayer src={"/failure.lottie"} autoplay={true} />
+            ) : type === "removed" ? (
+              <DotLottiePlayer src={"/removed.lottie"} loop={false} autoplay={true} direction={-1} />
             ) : (
               <DotLottiePlayer src={"/warning.lottie"} autoplay={true} />
             )}
@@ -70,9 +73,13 @@ const Notification = ({ message, type }) => {
 };
 
 const Notify = (message, type) => {
-  console.log("Notification triggered with message:", message, "and type:", type);
+  console.log(
+    "Notification triggered with message:",
+    message,
+    "and type:",
+    type
+  );
   return <Notification message={message} type={type} />;
 };
-
 
 export { Notification, Notify };
