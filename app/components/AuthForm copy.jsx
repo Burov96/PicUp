@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { supabase } from "../utils/supabaseClient";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 function AuthForm({ sendDataToParent }) {
   const [isNewUser, setIsNewUser] = useState(false);
@@ -13,9 +13,7 @@ function AuthForm({ sendDataToParent }) {
   const [isSigningUp, setIsSigningUp] = useState(false);
   const [forgotProccess, setForgotProccess] = useState(false);
   const [forgotPass, setForgotPass] = useState(false);
-  const [resetToken, setResetToken] = useState("");
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   const popNotification = (message, type) => {
     sendDataToParent(message, type);
@@ -23,36 +21,18 @@ function AuthForm({ sendDataToParent }) {
 
   async function handleForgotPass(e) {
     e.preventDefault();
-    setForgotProccess(true);
+    setForgotProccess(true)
     const { data, error } = await supabase.auth.resetPasswordForEmail(email);
     const supaData = { error, data };
     console.log(supaData);
     if (error) {
-      popNotification(error.message, "failure");
-      setForgotProccess(false);
-      return;
+      popNotification(error, "failure");
+    setForgotProccess(false)
+      return
     }
     popNotification("Check your email to reset your password!", "success");
-    setForgotProccess(false);
-  }
-
-  async function handleResetPassword(e) {
-    e.preventDefault();
-    setForgotProccess(true);
-    const token = searchParams.get("token");
-    const { data, error } = await supabase.auth.updateUser({
-      access_token: token,
-      password,
-    });
-    if (error) {
-      popNotification(error.message, "failure");
-      setForgotProccess(false);
-      return;
-    }
-    popNotification("Your password has been updated successfully!", "success");
-    setForgotProccess(false);
-    setForgotPass(false);
-    setIsNewUser(false);
+    
+    setForgotProccess(false)
   }
 
   async function handleLogin(e) {
@@ -83,6 +63,7 @@ function AuthForm({ sendDataToParent }) {
       email,
       password,
     });
+    // console.log({data, error});
     if (!error) {
       setIsSigningUp(true);
       popNotification(
@@ -94,7 +75,6 @@ function AuthForm({ sendDataToParent }) {
       popNotification(response, "failure");
     }
   }
-
   let signInMessage = isNewUser
     ? isSigningIn
       ? "Signing Up..."
@@ -102,7 +82,6 @@ function AuthForm({ sendDataToParent }) {
     : isSigningIn
     ? "Signing In..."
     : "Sign In";
-
   const forgotButton = forgotProccess ? "Recovering password..." : "Recover";
 
   const signUpMessage = (
@@ -187,7 +166,7 @@ function AuthForm({ sendDataToParent }) {
           {isSigningUp && signUpMessage}
         </form>
       )}
-      {forgotPass && !searchParams.get("token") && (
+      {forgotPass && (
         <form onSubmit={handleForgotPass}>
           <input
             type="email"
@@ -202,24 +181,6 @@ function AuthForm({ sendDataToParent }) {
             className="mt-6 group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
             {forgotButton}
-          </button>
-        </form>
-      )}
-      {searchParams.get("token") && (
-        <form onSubmit={handleResetPassword}>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="appearance-none rounded relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-            required
-            placeholder="New Password"
-          />
-          <button
-            type="submit"
-            className="mt-6 group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
-            Reset Password
           </button>
         </form>
       )}
